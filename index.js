@@ -1,33 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
     const image = document.getElementById("image");
+    const text = document.getElementById("text");
     const button = document.getElementById("changeButton");
 
-    // Список заданных картинок
-    const imageList = [
-        "https://picsum.photos/id/237/400/300",
-        "https://picsum.photos/id/231/400/300",
-        "https://picsum.photos/id/239/400/300",
-        "https://picsum.photos/id/236/400/300",
-        "https://picsum.photos/id/234/400/300"
+    // Список картинок и соответствующих текстов
+    const imageData = [
+        {
+            src: "https://picsum.photos/id/237/400/300",
+            text: "Эта собака наслаждается жизнью!"
+        },
+        {
+            src: "https://picsum.photos/id/231/400/300",
+            text: "Красивый пейзаж природы."
+        },
+        {
+            src: "https://picsum.photos/id/239/400/300",
+            text: "Город в лучах заката."
+        },
+        {
+            src: "https://picsum.photos/id/236/400/300",
+            text: "Рассвет в горах, лучшее время для медитации."
+        },
+        {
+            src: "https://picsum.photos/id/234/400/300",
+            text: "Спокойное озеро, идеальное место для отдыха."
+        }
     ];
 
-    let currentIndex = 0; // Индекс текущего изображения
+    let currentIndex = 0; // Индекс текущей картинки
 
     button.addEventListener("click", function () {
-        // 1. Исчезновение картинки (моментально)
-        image.style.transition = "opacity 0.1s ease-in-out"; // Быстрое исчезновение
-        image.style.opacity = "0";
+        // Создаем новый объект Image и загружаем следующее изображение
+        let nextIndex = (currentIndex + 1) % imageData.length;
+        let newImage = new Image();
+        newImage.src = imageData[nextIndex].src;
 
-        // 2. Смена изображения мгновенно после исчезновения
-        setTimeout(() => {
-            currentIndex++;
-            if (currentIndex >= imageList.length) {
-                currentIndex = 0; // Начинаем заново
-            }
-            image.src = imageList[currentIndex];
+        // Ожидаем загрузки новой картинки
+        newImage.onload = function () {
+            // Плавно скрываем картинку и текст
+            image.style.opacity = "0";
+            text.style.opacity = "0";
 
-            // 3. Плавное появление новой картинки
-            image.style.opacity = "1";
-        }, 100); // Минимальная задержка 100ms, чтобы избежать мерцания
+            setTimeout(() => {
+                // Меняем картинку и текст
+                image.src = newImage.src;
+                text.textContent = imageData[nextIndex].text;
+
+                // Плавно показываем новую картинку и текст
+                image.style.opacity = "1";
+                text.style.opacity = "1";
+
+                // Обновляем текущий индекс
+                currentIndex = nextIndex;
+            }, 300); // Ждем 300ms перед сменой, чтобы анимация выглядела плавно
+        };
     });
 });
