@@ -4,18 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Смена картинок и текста</title>
-    <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-    <h1>Галерея</h1>
-    <p id="text">Эта собака наслаждается жизнью!</p>
+<style>
+    /* 🔹 ГЛОБАЛЬНЫЕ СТИЛИ 🔹 */
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+        color: #333;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow-x: hidden;
+        -webkit-text-size-adjust: 100%;
+    }
 
-    <img id="image" src="https://picsum.photos/id/237/400/300" alt="Фото 1">
+    /* Заголовок */
+    h1 {
+        font-size: 2.3em;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        margin: 10px;
+    }
 
-    <br>
-    <button id="changeButton">Сменить картинку</button>
+    /* Параграф */
+    p {
+        font-size: 1.1em;
+        max-width: 90%;
+        line-height: 1.6;
+        margin: 15px auto;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 10px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        transition: opacity 0.3s ease-in-out; /* Плавная смена текста */
+    }
 
-    <script src="index.js"></script>
+    /* Картинка с плавной сменой */
+    img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        border-radius: 15px;
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 15px;
+        object-fit: contain;
+        transition: opacity 0.3s ease-in-out; /* Плавное исчезновение и появление */
+    }
+
+    /* Кнопка */
+    button {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        border: none;
+        background: #ff6f61;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    button:active {
+        background: #e64a45;
+    }
+
+    /* 🔹 АДАПТАЦИЯ ДЛЯ iPHONE (до 768px) 🔹 */
+    @media (max-width: 768px) {
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        p {
+            font-size: 1em;
+        }
+
+        img {
+            max-width: 100%;
+            width: 90%;
+            max-height: 300px;
+        }
+
+        button {
+            font-size: 1em;
+            padding: 10px 15px;
+        }
+    }
+
+    /* 🔹 Для маленьких экранов (например, iPhone SE) 🔹 */
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 1.8em;
+        }
+
+        p {
+            font-size: 0.95em;
+        }
+
+        img {
+            width: 90%;
+            max-width: 280px;
+        }
+
+        button {
+            font-size: 0.9em;
+            padding: 8px 12px;
+        }
+    }
+
+</style>
+
+<h1>Галерея</h1>
+<p id="text">Эта собака наслаждается жизнью!</p>
+
+<img id="image" src="https://picsum.photos/id/237/400/300" alt="Фото 1">
+
+<br>
+<button id="changeButton">Сменить картинку</button>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const image = document.getElementById("image");
+        const text = document.getElementById("text");
+        const button = document.getElementById("changeButton");
+
+        // Список картинок и соответствующих текстов
+        const imageData = [
+            {
+                src: "https://picsum.photos/id/237/400/300",
+                text: "Эта собака наслаждается жизнью!"
+            },
+            {
+                src: "https://picsum.photos/id/231/400/300",
+                text: "Красивый пейзаж природы."
+            },
+            {
+                src: "https://picsum.photos/id/239/400/300",
+                text: "Город в лучах заката."
+            },
+            {
+                src: "https://picsum.photos/id/236/400/300",
+                text: "Рассвет в горах, лучшее время для медитации."
+            },
+            {
+                src: "https://picsum.photos/id/234/400/300",
+                text: "Спокойное озеро, идеальное место для отдыха."
+            }
+        ];
+
+        let currentIndex = 0; // Индекс текущей картинки
+
+        button.addEventListener("click", function () {
+            // Создаем новый объект Image и загружаем следующее изображение
+            let nextIndex = (currentIndex + 1) % imageData.length;
+            let newImage = new Image();
+            newImage.src = imageData[nextIndex].src;
+
+            // Ожидаем загрузки новой картинки
+            newImage.onload = function () {
+                // Плавно скрываем картинку и текст
+                image.style.opacity = "0";
+                text.style.opacity = "0";
+
+                setTimeout(() => {
+                    // Меняем картинку и текст
+                    image.src = newImage.src;
+                    text.textContent = imageData[nextIndex].text;
+
+                    // Плавно показываем новую картинку и текст
+                    image.style.opacity = "1";
+                    text.style.opacity = "1";
+
+                    // Обновляем текущий индекс
+                    currentIndex = nextIndex;
+                }, 300); // Ждем 300ms перед сменой, чтобы анимация выглядела плавно
+            };
+        });
+    });
+</script>
 </body>
 </html>
