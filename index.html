@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Смена картинок и текста</title>
+    <title>Дашин.com</title>
 </head>
 <body>
 
@@ -49,6 +49,7 @@
     img {
         width: 100%;
         max-width: 400px;
+        max-height: 400px;
         height: auto;
         border-radius: 15px;
         box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
@@ -124,13 +125,13 @@
 
 </style>
 
-<h1>Галерея</h1>
-<p id="text">Эта собака наслаждается жизнью!</p>
+<h1>Этот сайт я сделал для тебя! ♡</h1>
+<p id="text">Этот котик, что-то хочет тебе сказать</p>
 
-<img id="image" src="https://picsum.photos/id/237/400/300" alt="Фото 1">
+<img id="image" src="img/i1.jpg" alt="Фото 1">
 
 <br>
-<button id="changeButton">Сменить картинку</button>
+<button id="changeButton">Дальше</button>
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -141,24 +142,40 @@
         // Список картинок и соответствующих текстов
         const imageData = [
             {
-                src: "https://picsum.photos/id/237/400/300",
-                text: "Эта собака наслаждается жизнью!"
+                src: "img/i1.jpg",
+                text: "Этот котик, что-то хочет тебе сказать"
             },
             {
-                src: "https://picsum.photos/id/231/400/300",
-                text: "Красивый пейзаж природы."
+                src: "img/i2.jpg",
+                text: "Это тебе на 14 февраля ♡"
             },
             {
-                src: "https://picsum.photos/id/239/400/300",
-                text: "Город в лучах заката."
+                src: "img/i3.jpg",
+                text: "Дальше будет мини сказка, если ты готова, нажимай!!!"
             },
             {
-                src: "https://picsum.photos/id/236/400/300",
-                text: "Рассвет в горах, лучшее время для медитации."
+                src: "img/i4.png",
+                text: "Кот по имени Широ жил в старом книжном магазине, где любил спать на стопках древних фолиантов."
             },
             {
-                src: "https://picsum.photos/id/234/400/300",
-                text: "Спокойное озеро, идеальное место для отдыха."
+                src: "img/i5.png",
+                text: "Однажды он обнаружил среди книг старинный дневник с картой, ведущей к спрятанному сокровищу."
+            },
+            {
+                src: "img/i6.png",
+                text: "Под покровом ночи он выбрался на улицы города, следуя по маршруту, указанному на карте."
+            },
+            {
+                src: "img/i7.png",
+                text: "Его приключение привело его в таинственный подземный тоннель, где его ждали испытания – лабиринты, загадки и механические ловушки."
+            },
+            {
+                src: "img/i8.png",
+                text: "В конце пути он нашел не сундук с золотом, а старинный ошейник, дающий своему владельцу девять жизней, и с тех пор Широ стал легендой среди уличных котов."
+            },
+            {
+                src: "img/i9.png",
+                text: "♡"
             }
         ];
 
